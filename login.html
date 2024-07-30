@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #001f3f, #003366, #004080, #00509e);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            color: white;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            width: 400px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            color: black;
+        }
+
+        .login-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .login-form label {
+            font-weight: bold;
+        }
+
+        .login-form input {
+            margin-bottom: 10px;
+        }
+
+        .login-form .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .login-form .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .login-form .forgot-password,
+        .login-form .remember-me {
+            font-size: 14px;
+        }
+
+        .login-form .forgot-password a {
+            color: #007bff;
+        }
+
+        .login-form .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .login-footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #6c757d;
+            text-align: center;
+        }
+
+        .login-footer a {
+            color: #6c757d;
+        }
+
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 2;
+            width: 50px;
+            height: 50px;
+            filter: drop-shadow(1px 3px 3px rgb(255, 255, 255));
+        }
+
+        .bubbles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            opacity: 0.5;
+            pointer-events: none;
+            animation: moveBubble linear;
+        }
+
+        @keyframes moveBubble {
+            0% { transform: translateY(100vh); }
+            100% { transform: translateY(-100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bubbles"></div>
+    <img src="image/kementrian.png" alt="Logo" class="logo">
+
+    <div class="login-container">
+        <div class="login-header">
+            <h3>Simagang</h3>
+            <p>Silahkan masukkan e-mail dan password anda</p>
+        </div>
+        <form class="login-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Masukkan Email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" placeholder="Masukkan Password">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="togglePassword">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <div class="forgot-password text-right"></div>
+        </form>
+        <div class="login-footer">
+            <p>© TIM PKL PRESMA 2024</p>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const password = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function () {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            const size = Math.random() * 30 + 20; // Adjust size range as needed
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${Math.random() * 100}vw`;
+            bubble.style.bottom = `-${size}px`;
+            bubble.style.animationDuration = `${Math.random() * 15 + 15}s`; // Adjust animation duration
+            bubble.style.animationTimingFunction = 'linear';
+            bubble.style.animationIterationCount = 'infinite';
+            document.querySelector('.bubbles').appendChild(bubble);
+
+            // Remove bubble after animation to prevent DOM clutter
+            bubble.addEventListener('animationend', () => bubble.remove());
+        }
+
+        // Continuously create fewer bubbles at intervals
+        function generateBubbles() {
+            for (let i = 0; i < 5; i++) { // Reduced number of bubbles created at once
+                createBubble();
+            }
+        }
+
+        setInterval(generateBubbles, 2000); // Adjust interval to control bubble density
+    </script>
+</body>
+</html>
